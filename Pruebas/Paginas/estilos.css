@@ -1,0 +1,125 @@
+html { scroll-behavior: auto; }
+  html, body { height: 100%; }
+  body {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+ 
+  @keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes aparecer {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes moverDegradado {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  
+  .titulo-wrapper {
+    position: relative;
+    display: inline-grid;
+    margin: 0 auto;
+  }
+
+  .titulo-hueco,
+  .titulo-hueco-hover {
+    background-size: 300% 100%;
+    animation: moverDegradado 7s linear infinite;
+    grid-area: 1 / 1;
+  }
+
+  .titulo-hueco {
+    background: linear-gradient(50deg, #fc8701, #bb841faf, #fc8701, #bb841faf, #fc8701);
+    animation-name: zoomIn, moverDegradado;
+    animation-duration: 1.0s, 7s;
+    animation-timing-function: ease-out, linear;
+    animation-iteration-count: 1, infinite;
+    animation-delay: 0s, 1.0s;
+    animation-fill-mode: forwards, none;
+    opacity: 1;
+    
+    color: #fc8701;
+  }
+
+  .titulo-hueco-hover {
+    background: linear-gradient(50deg, #02bef7, #02bef767, #02bef7, #02bef767, #02bef7);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    color: #02bef7;
+  }
+
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .titulo-hueco,
+    .titulo-hueco-hover {
+      -webkit-text-stroke: 2px currentColor;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  }
+
+  .titulo-wrapper:hover .titulo-hueco-hover,
+  .titulo-wrapper.forzar-hover .titulo-hueco-hover { opacity: 1; }
+
+  .titulo-hueco2 {
+    -webkit-text-stroke: 1px currentColor; 
+    background: linear-gradient(90deg, #02bef7b6, #02bef767, #02bef7b6, #02bef767, #02bef7b6);
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation:
+      aparecer 1.2s ease-out 1.0s forwards,
+      moverDegradado 7s linear infinite 1.0s;
+    animation-fill-mode: backwards; 
+  }
+
+  
+  header {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh; 
+  }
+
+  .video-fondo {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+  }
+
+  .contenido-header {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cuadro {
+
+   outline: 2px solid #fc8701;
+    border: 2px solid #edeff0;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 200px;
+    width: 80%;
+    margin: 0 auto;
+    color: white;
+  }
