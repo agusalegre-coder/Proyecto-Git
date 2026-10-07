@@ -1,56 +1,89 @@
+ //scroll hacia botones//
 function smoothScrollTo(id, duration = 1200, triggerEl = null) {
-    const target = document.getElementById(id);
-    if (!target) return;
+  const target = document.getElementById(id);
+  if (!target) return;
 
-    const startY = window.scrollY;
-    const targetY = target.getBoundingClientRect().top + startY;
-    const distance = targetY - startY;
-    let startTime = null;
+  const startY = window.scrollY;
+  const targetY = target.getBoundingClientRect().top + startY;
+  const distance = targetY - startY;
+  let startTime = null;
 
-    if (triggerEl) triggerEl.classList.add('forzar-hover');
+  if (triggerEl) triggerEl.classList.add('forzar-hover');
 
-    function easeInOutQuad(t) {
-      return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-    }
-
-    function step(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      window.scrollTo(0, startY + distance * easeInOutQuad(progress));
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else if (triggerEl) {
-
-        triggerEl.classList.remove('forzar-hover');
-      }
-    }
-
-    requestAnimationFrame(step);
+  function easeInOutQuad(t) {
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
 
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.titulo-hueco').forEach((el) => {
-      el.addEventListener('animationend', (e) => {
-        if (e.animationName === 'zoomIn') {
-          el.style.animation = 'moverDegradado 7s linear infinite';
-        }
-      });
+  function step(currentTime) {
+    if (startTime === null) startTime = currentTime;
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, startY + distance * easeInOutQuad(progress));
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else if (triggerEl) {
+      triggerEl.classList.remove('forzar-hover');
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.titulo-hueco').forEach((el) => {
+    el.addEventListener('animationend', (e) => {
+      if (e.animationName === 'zoomIn') {
+        el.style.animation = 'moverDegradado 7s linear infinite';
+      }
     });
   });
+});
 
-  const videoFondo = document.querySelector('.video-fondo');
-const headerPrincipal = document.querySelector('header');
+
+const videoFondo = document.querySelector('.video-fondo');
+const headerPrincipal = document.querySelector('#inicio');
+let videoPausado = false;
 
 function desvanecerVideo() {
   const alto = headerPrincipal.offsetHeight;
   const progreso = Math.min(window.scrollY / (alto * 0.8), 1);
+
   videoFondo.style.opacity = 1 - progreso;
+  headerPrincipal.style.setProperty('--oscuro', 1 - progreso);
+
+ 
+  if (progreso >= 1 && !videoPausado) {
+    videoFondo.pause();
+    videoPausado = true;
+  } else if (progreso < 1 && videoPausado) {
+    videoFondo.play().catch(() => {});
+    videoPausado = false;
+  }
 }
 
 window.addEventListener('scroll', desvanecerVideo, { passive: true });
 desvanecerVideo();
 
-if (progreso >= 1) videoFondo.pause();
-else videoFondo.play();
+
+function abrirPanel(nombre) {
+  document.body.classList.add('ver-' + nombre);
+  document.getElementById('panel-' + nombre).setAttribute('aria-hidden', 'false');
+}
+
+function cerrarPaneles() {
+  document.body.classList.remove('ver-base', 'ver-salto');
+  document.querySelectorAll('.panel').forEach(p => p.setAttribute('aria-hidden', 'true'));
+}
+
+document.querySelectorAll('[data-ir]').forEach(btn => {
+  btn.addEventListener('click', () => abrirPanel(btn.dataset.ir));
+});
+
+document.querySelectorAll('[data-volver]').forEach(btn => {
+  btn.addEventListener('click', cerrarPaneles);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') cerrarPaneles();
+});

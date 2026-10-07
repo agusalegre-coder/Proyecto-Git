@@ -10,59 +10,75 @@
 
 </head>
 <body class="bg-slate-950 font-sans">
-  
-  <header class="bg-slate-900 text-white p-6 flex flex-col items-center justify-center text-center">
 
-    <video class="video-fondo" autoplay muted loop playsinline>
-      <source src="Media/video.mp4" type="video/mp4">
-    </video>
 
-    <div class="contenido-header max-w-4xl px-4">
-      <button
-        type="button"
-        onclick="smoothScrollTo('destino', 1400, this)"
-        class="titulo-wrapper text-7xl sm:text-9xl font-extrabold tracking-tight bg-transparent border-none p-0 cursor-pointer active:scale-95 focus:outline-none transition-transform duration-300"
-      >
-        <span class="titulo-hueco">Basalto</span>
-        <span class="titulo-hueco-hover">Basalto</span>
-      </button>
-      <p class="text-xl sm:text-3xl mt-6 font-medium titulo-hueco2 leading-relaxed">
-        Donde las buenas bases se convierten en grandes saltos.
-      </p>
-    </div>
+  <div id="principal">
 
-  </header>
+    <header id="inicio" class="bg-slate-900 text-white p-6 flex flex-col items-center justify-center text-center">
 
-<section id="destino" class="seccion-destino">
-  <div class="destino-contenedor">
+      <video class="video-fondo" autoplay muted loop playsinline>
+        <source src="Media/video.mp4" type="video/mp4">
+      </video>
 
-    <h2 class="destino-titulo">Software a <span>Medida</span></h2>
-    <p class="destino-texto">
-      Creamos sitios, aplicaciones y herramientas adaptadas a cada negocio.
-    </p>
-
-    <div class="tarjetas">
-
-      <article class="tarjeta">
-        <h3 class="tarjeta-titulo">Qué incluye:</h3>
-        <ul class="tarjeta-lista">
-          <li>Aplicaciones Web y Mobile</li>
-          <li>Automatización de procesos</li>
-          <li>Integración de APIs</li>
-        </ul>
-      </article>
-
-      <article class="tarjeta tarjeta-destacada">
-        <h3 class="tarjeta-titulo">Beneficios:</h3>
-        <p>
-          Escalabilidad sin fricciones, mayor engagement de usuarios
-          y procesos internos 100% automatizados.
+      <div class="contenido-header max-w-4xl px-4">
+        <button
+          type="button"
+          onclick="smoothScrollTo('destino', 1400, this)"
+          class="titulo-wrapper text-7xl sm:text-9xl font-extrabold tracking-tight bg-transparent border-none p-0 cursor-pointer active:scale-95 focus:outline-none transition-transform duration-300"
+        >
+          <span class="titulo-hueco">Basalto</span>
+          <span class="titulo-hueco-hover">Basalto</span>
+        </button>
+        <p class="text-xl sm:text-3xl mt-6 font-medium titulo-hueco2 leading-relaxed">
+          Donde las buenas bases se convierten en grandes saltos.
         </p>
-      </article>
-</section>
+      </div>
 
+    </header>
+
+    <section id="destino" class="seccion-destino">
+      <div class="destino-contenedor">
+
+        <h2 class="destino-titulo">Por dónde <span>empezamos?</span></h2>
+
+        <div class="tarjetas">
+
+          <button type="button" class="tarjeta tarjeta-boton" data-ir="base">
+            <span class="tarjeta-frase">BASE</span>
+            <span class="tarjeta-flecha">←</span>
+          </button>
+
+          <button type="button" class="tarjeta tarjeta-boton" data-ir="salto">
+            <span class="tarjeta-frase">SALTO</span>
+            <span class="tarjeta-flecha">→</span>
+          </button>
+
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+  
+
+
+  
+  <section id="panel-base" class="panel panel-izq" aria-hidden="true">
+    <button type="button" class="volver" data-volver>Volver →</button>
+    <div class="panel-contenido">
+      <h2>Base</h2>
+      <p>Acá va el contenido de BASE.</p>
+    </div>
+  </section>
+
+  <section id="panel-salto" class="panel panel-der" aria-hidden="true">
+    <button type="button" class="volver" data-volver>← Volver</button>
+    <div class="panel-contenido">
+      <h2>Salto</h2>
+      <p>Acá va el contenido de SALTO.</p>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
 </body>
-
-<script src="script.js"></script>
-
 </html>
